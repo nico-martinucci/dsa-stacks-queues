@@ -1,5 +1,3 @@
-const LinkedList = require("./linked-list")
-
 /** Node: node for a stack. */
 
 class Node {
@@ -19,14 +17,15 @@ class Stack {
   size = 0;
 
   constructor() {
-    this._ll = new LinkedList();
+    this._array = [];
   }
 
   /** push(val): add new value to the top of the stack. Returns undefined. */
 
   push(val) {
-    this._ll.unshift(val);
-    this._updateProps();
+    this._array.push(val);
+    this.top = val;
+    this.size++;
   }
 
   /** pop(): remove the node from the top of the stack
@@ -34,10 +33,9 @@ class Stack {
 
   pop() {
     if(this.size === 0) throw new Error("The stack cannot be empty!");
-    const val = this._ll.shift();
-    this._updateProps();
-
-    return val;
+    this.size--;
+    this.top = this._array[this.size - 1];
+    return this._array.pop();
   }
 
   /** peek(): return the value of the top node in the stack. */
@@ -50,12 +48,6 @@ class Stack {
 
   isEmpty() {
     return this.size === 0;
-  }
-
-
-  _updateProps() {
-    this.top = this._ll.head;
-    this.size = this._ll.length;
   }
 }
 
